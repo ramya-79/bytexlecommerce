@@ -1,89 +1,135 @@
-let renderData = document.querySelector(".renderData");
-let renderCartData = document.querySelector(".renderCartData");
-
-function renderProducts(products) {
-    renderData.innerHTML = "";
-    products.forEach((ele) => {
-        let productCard = document.createElement("div");
-        productCard.setAttribute("class", "product-card");
-
-        let createImgEle = document.createElement("img");
-        createImgEle.setAttribute("src", ele.image);
-        createImgEle.setAttribute("class", "myImages");
-
-        let createTitle = document.createElement("p");
-        createTitle.textContent = ele.title;
-
-        let createPriceEle = document.createElement("p");
-        createPriceEle.textContent = `$${ele.price}`; // Corrected
-
-        let btnEle = document.createElement("button");
-        btnEle.textContent = "Add to cart";
-
-        productCard.appendChild(createImgEle);
-        productCard.appendChild(createTitle);
-        productCard.appendChild(createPriceEle);
-        productCard.appendChild(btnEle);
-
-        renderData.appendChild(productCard);
-
-        btnEle.addEventListener("click", () => addTocart(ele.image, ele.title, ele.price));
-    });
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-function addTocart(img, title, price) {
-    let cartItem = document.createElement("div");
-    cartItem.setAttribute("class", "cart-item");
-
-    let cartImgEle = document.createElement("img");
-    cartImgEle.setAttribute("src", img);
-    cartImgEle.setAttribute("class", "cartImgElement");
-
-    let cartTitleEle = document.createElement("p");
-    cartTitleEle.textContent = title;
-
-    let cartPriceEle = document.createElement("p");
-    cartPriceEle.textContent = `$${price}`; // Corrected
-
-    let removeBtn = document.createElement("button");
-    removeBtn.setAttribute("class", "remove-btn");
-    removeBtn.textContent = "Remove";
-    removeBtn.addEventListener("click", () => {
-        renderCartData.removeChild(cartItem);
-    });
-
-    cartItem.appendChild(cartImgEle);
-    cartItem.appendChild(cartTitleEle);
-    cartItem.appendChild(cartPriceEle);
-    cartItem.appendChild(removeBtn);
-
-    renderCartData.appendChild(cartItem);
+/* Header Styles */
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: lightcoral;
 }
 
-document.querySelector(".cart-icon").addEventListener("click", () => {
-    document.getElementById("cartSection").scrollIntoView({ behavior: "smooth" });
-});
-
-function fetchJewelry() {
-    fetch('https://fakestoreapi.com/products/category/jewelery')
-        .then(res => res.json())
-        .then(json => {
-            renderProducts(json);
-        });
+.navbar {
+    display: flex;
+    align-items: center;
 }
 
-document.getElementById("jewelryBtn").addEventListener("click", () => {
-    fetchJewelry();  // Fix for switching to jewelry
-});
+.logo img {
+    height: 60px;
+}
 
-document.getElementById("clothesBtn").addEventListener("click", () => {
-    fetch(encodeURI("https://fakestoreapi.com/products/category/women's%20clothing")) // Encoded properly
-        .then(res => res.json())
-        .then(json => {
-            renderProducts(json);
-        });
-});
+.search-container {
+    display: flex;
+    align-items: center;
+    margin-left: 20px; /* Space between logo and search bar */
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-    fetchJewelry();
-});
+#searchBar {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#searchBtn {
+    padding: 5px 10px;
+    background-color: lightblue;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px; /* Space between search bar and button */
+}
+
+/* Cart Icon */
+.cart-icon {
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Banner Styles */
+.banner {
+    width: 100%;
+}
+
+.banner img {
+    width: 100%; /* Full width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Buttons for categories */
+.category-buttons {
+    margin: 20px;
+    text-align: center;
+}
+
+.category-buttons button {
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: lightblue;
+    border: none;
+    cursor: pointer;
+}
+
+/* Product Styles */
+.renderData {
+    display: grid; /* Changed from flex to grid */
+    grid-template-columns: repeat(3, 1fr); /* Three columns */
+    gap: 20px; /* Space between grid items */
+    margin: 20px;
+}
+
+.product-card {
+    text-align: center;
+    margin: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.myImages {
+    height: 250px;
+    width: 250px;
+}
+
+/* Cart Styles */
+.renderCartData {
+    height: auto;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.cartImgElement {
+    height: 40px;
+    margin: 5px 0;
+}
+
+.cart-item {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center; /* Center items vertically */
+}
+
+.remove-btn {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: lightcoral;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
