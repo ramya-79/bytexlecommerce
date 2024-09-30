@@ -15,7 +15,7 @@ function renderProducts(products) {
         createTitle.textContent = ele.title;
 
         let createPriceEle = document.createElement("p");
-        createPriceEle.textContent = $${ele.price};
+        createPriceEle.textContent = `$${ele.price};
 
         let btnEle = document.createElement("button");
         btnEle.textContent = "Add to cart";
